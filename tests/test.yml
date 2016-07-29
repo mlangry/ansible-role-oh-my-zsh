@@ -1,0 +1,10 @@
+---
+- hosts: localhost
+  remote_user: root
+  roles:
+    - role: ansible-role-oh-my-zsh
+      oh_my_zsh_user: user1
+
+    - role: ansible-role-oh-my-zsh
+      oh_my_zsh_user: user2
+      oh_my_zsh_rc_file_source_path: zshrc2
