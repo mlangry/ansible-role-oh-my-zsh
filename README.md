@@ -13,10 +13,11 @@ Role Variables
 --------------
 
 ````yaml
-oh_my_zsh_user: "{{ ansible_user_id }}"
-oh_my_zsh_path: "/home/{{ oh_my_zsh_user }}/.oh-my-zsh"
-# oh_my_zsh_rc_file_source_path:
-oh_my_zsh_rc_file_path: "/home/{{ oh_my_zsh_user }}/.zshrc"
+oh_my_zsh_users:
+  - "{{ ansible_user_id }}"
+# -  { user: username, zsh_rc_file_path: zsh_rc_file_path }
+oh_my_zsh_path: "~/.oh-my-zsh"
+oh_my_zsh_rc_file_path: "~/.zshrc"
 
 ````
 
@@ -28,24 +29,24 @@ None
 Example Playbook
 ----------------
 
+By default zsh is configured for connected user.
+
 ````yaml
 - hosts: servers
   roles:
      - { role: mlangry.oh-my-zsh }
 ````
 
-If you want to configure oh-my-zsh for multiple users:
+If you want to configure zsh for multiple users:
 
 ````yaml
 - hosts: servers
   roles:
-    - role: mlangry.oh-my-zsh
-      zsh_user: user1
-      zsh_rc_file_source_path: zshrc1
-
-    - role: mlangry.oh-my-zsh
-      zsh_user: user2
-      zsh_rc_file_source_path: zshrc2
+    - role: ansible-role-zsh
+      zsh_users:
+        - { user: user1, zsh_rc_file_path: zshrc1 }
+        - { user: user2 }
+        - user3
 ````
 
 License
