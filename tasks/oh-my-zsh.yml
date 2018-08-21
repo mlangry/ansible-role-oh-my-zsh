@@ -2,18 +2,37 @@
 - name: Install oh-my-zsh
   git:
     repo: https://github.com/robbyrussell/oh-my-zsh.git
-    dest: "{{ oh_my_zsh_path }}"
+    dest: "{{ i_oh_my_zsh_path }}"
     update: yes
   become: yes
-  become_user: "{{ user }}"
+  become_user: "{{ i_user }}"
 
 - name: Create configuration file
   copy:
-    src: "{{ zsh_rc_file_path }}"
-    dest: "{{ oh_my_zsh_rc_file_path }}"
-    owner: "{{ user }}"
-    group: "{{ user }}"
-    remote_src: "{{ zsh_rc_file_path is not defined }}"
+    src: "{{ i_zsh_rc_file_path }}"
+    dest: "{{ i_oh_my_zsh_rc_file_path }}"
+    owner: "{{ i_user }}"
+    group: "{{ i_user }}"
+    remote_src: "{{ i_zsh_rc_file_path is not defined }}"
     backup: yes
   become: yes
-  become_user: "{{ user }}"
+  become_user: "{{ i_user }}"
+
+- name: Install oh-my-zsh themes
+  git:
+    repo: "{{ item.src }}"
+    dest: "{{ i_oh_my_zsh_path ~ '/custom/themes' }}"
+    update: yes
+  become: yes
+  become_user: "{{ i_user }}"
+  with_items: "{{ i_oh_my_zsh_themes }}"
+
+
+- name: Install oh-my-zsh plugins
+  git:
+    repo: "{{ item.src }}"
+    dest: "{{ i_oh_my_zsh_path ~ '/custom/plugins' }}"
+    update: yes
+  become: yes
+  become_user: "{{ i_user }}"
+  with_items: "{{ i_oh_my_zsh_plugins }}"

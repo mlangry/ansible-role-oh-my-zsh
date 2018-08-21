@@ -4,3 +4,5 @@ oh_my_zsh_users:
 # -  { user: username, zsh_rc_file_path: zsh_rc_file_path }
 oh_my_zsh_path: "~/.oh-my-zsh"
 oh_my_zsh_rc_file_path: "~/.zshrc"
+oh_my_zsh_themes: []
+oh_my_zsh_plugins: []
