@@ -1,0 +1,19 @@
+---
+- name: Install oh-my-zsh
+  git:
+    repo: https://github.com/robbyrussell/oh-my-zsh.git
+    dest: "{{ oh_my_zsh_path }}"
+    update: yes
+  become: yes
+  become_user: "{{ user }}"
+
+- name: Create configuration file
+  copy:
+    src: "{{ zsh_rc_file_path }}"
+    dest: "{{ oh_my_zsh_rc_file_path }}"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    remote_src: "{{ zsh_rc_file_path is not defined }}"
+    backup: yes
+  become: yes
+  become_user: "{{ user }}"
