@@ -14,8 +14,8 @@
     dest: "{{ oh_my_zsh_rc_file_path }}"
     owner: "{{ item.user | default(item) }}"
     group: "{{ item.user | default(item) }}"
-    mode: u+rwx,g-rx,o-rx
     remote_src: "{{ item.zsh_rc_file_path is not defined }}"
     backup: yes
   become: yes
+  become_user: "{{ item.user | default(item) }}"
   with_items: "{{ oh_my_zsh_users }}"
