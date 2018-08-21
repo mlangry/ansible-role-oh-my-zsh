@@ -5,5 +5,5 @@
   with_dict: "{{ oh_my_zsh_users }}"
 
 - include: oh-my-zsh.yml
-  vars: {"{{ vars['oh_my_zsh_' ~ item.user] }}"}
+  vars: "{{ vars['oh_my_zsh_' ~ item.user] | to_yaml }}"
   with_items: "{{ oh_my_zsh_users }}"
