@@ -13,7 +13,7 @@
     dest: "{{ i_oh_my_zsh_rc_file_path }}"
     owner: "{{ i_user }}"
     group: "{{ i_user }}"
-    remote_src: "{{ i_zsh_rc_file_path is not defined }}"
+    remote_src: "{{ i_zsh_rc_file_path == False }}"
     backup: yes
   become: yes
   become_user: "{{ i_user }}"
