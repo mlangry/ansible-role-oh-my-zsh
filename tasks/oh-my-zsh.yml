@@ -9,7 +9,7 @@
 
 - name: Create configuration file
   copy:
-    src: "{{ i_zsh_rc_file_path }}"
+    src: "{{ i_zsh_rc_file_path  | default( i_oh_my_zsh_rc_file_path ~ '/templates/zshrc.zsh-template' )}}"
     dest: "{{ i_oh_my_zsh_rc_file_path }}"
     owner: "{{ i_user }}"
     group: "{{ i_user }}"
