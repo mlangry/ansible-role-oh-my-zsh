@@ -2,37 +2,37 @@
 - name: Install oh-my-zsh
   git:
     repo: https://github.com/robbyrussell/oh-my-zsh.git
-    dest: "{{ i_oh_my_zsh_path }}"
+    dest: "{{ oh_my_zsh_path }}"
     update: yes
   become: yes
-  become_user: "{{ i_user }}"
+  become_user: "{{ user }}"
 
 - name: Create configuration file
   copy:
-    src: "{{ i_zsh_rc_file_path | default( i_oh_my_zsh_path ~ '/templates/zshrc.zsh-template' ) }}"
-    dest: "{{ i_oh_my_zsh_rc_file_path }}"
-    owner: "{{ i_user }}"
-    group: "{{ i_user }}"
-    remote_src: "{{ i_remote_zsh_rc_file_path }}"
+    src: "{{ zsh_rc_file_path | default( oh_my_zsh_path ~ '/templates/zshrc.zsh-template' ) }}"
+    dest: "{{ oh_my_zsh_rc_file_path }}"
+    owner: "{{ user }}"
+    group: "{{ user }}"
+    remote_src: "{{ zsh_rc_file_path is defined }}"
     backup: yes
   become: yes
-  become_user: "{{ i_user }}"
+  become_user: "{{ user }}"
 
 - name: Install oh-my-zsh themes
   git:
     repo: "{{ item.src }}"
-    dest: "{{ i_oh_my_zsh_path ~ '/custom/themes' }}"
+    dest: "{{ oh_my_zsh_path ~ '/custom/themes' }}"
     update: yes
   become: yes
-  become_user: "{{ i_user }}"
-  with_items: "{{ i_oh_my_zsh_themes }}"
+  become_user: "{{ user }}"
+  with_items: "{{ oh_my_zsh_themes }}"
 
 
 - name: Install oh-my-zsh plugins
   git:
     repo: "{{ item.src }}"
-    dest: "{{ i_oh_my_zsh_path ~ '/custom/plugins' }}"
+    dest: "{{ oh_my_zsh_path ~ '/custom/plugins' }}"
     update: yes
   become: yes
-  become_user: "{{ i_user }}"
-  with_items: "{{ i_oh_my_zsh_plugins }}"
+  become_user: "{{ user }}"
+  with_items: "{{ oh_my_zsh_plugins }}"

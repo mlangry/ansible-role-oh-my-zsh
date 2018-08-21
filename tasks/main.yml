@@ -1,11 +1,4 @@
 ---
 - include: oh-my-zsh.yml
-  vars:
-    i_user: "{{ item.user | default(item) }}"
-    i_zsh_rc_file_path: "{{ item.zsh_rc_file_path }}"
-    i_remote_zsh_rc_file_path: "{{ item.zsh_rc_file_path is defined }}"
-    i_oh_my_zsh_path: "{{ item.oh_my_zsh_path | default(oh_my_zsh_path) }}"
-    i_oh_my_zsh_rc_file_path: "{{ item.oh_my_zsh_rc_file_path | default(oh_my_zsh_rc_file_path) }}"
-    i_oh_my_zsh_themes: "{{ item.oh_my_zsh_themes | default(oh_my_zsh_themes) }}"
-    i_oh_my_zsh_plugins: "{{ item.oh_my_zsh_plugins | default(oh_my_zsh_plugins) }}"
+  vars: "{{ vars | combine(item) }}"
   with_items: "{{ oh_my_zsh_users }}"
