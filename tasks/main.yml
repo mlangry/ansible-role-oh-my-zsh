@@ -1,14 +1,35 @@
 ---
+- name: Install oh-my-zsh
+  git:
+    repo: https://github.com/robbyrussell/oh-my-zsh.git
+    dest: "{{ item.oh_my_zsh_path | default(oh_my_zsh_path) }}"
+    update: yes
+  become: yes
+  become_user: "{{ item.user | default(item) }}"
+  with_items: "{{ oh_my_zsh_users }}"
 
-- name: "Combine specific with default variables"
-  set_fact: {"oh_my_zsh_{{ item.user }}": "{{ vars | combine(item) }}"}
-  with_dict: "{{ oh_my_zsh_users }}"
+- name: Create configuration file
+  copy:
+    src: "{{ item.zsh_rc_file_path | default( oh_my_zsh_path ~ '/templates/zshrc.zsh-template' ) }}"
+    dest: "{{ item.oh_my_zsh_rc_file_path | default(oh_my_zsh_rc_file_path) }}"
+    owner: "{{ item.user | default(item) }}"
+    group: "{{ item.user | default(item) }}"
+    remote_src: "{{ item.zsh_rc_file_path is not defined }}"
+    backup: yes
+  become: yes
+  become_user: "{{ item.user | default(item) }}"
+  with_items: "{{ oh_my_zsh_users }}"
 
-- name: "Combine specific with default variables"
-  set_fact: {"oh_my_zsh_{{ item.user }}": "{{ vars | combine(item) }}"}
-  with_dict: "{{ oh_my_zsh_users }}"
+- include: oh-my-zsh-themes.yml
+  vars: 
+    - oh_my_zsh_themes_user: "{{ item.user | default(item) }}"
+    - oh_my_zsh_themes_themes: "{{ oh_my_zsh_themes }}"
+    - oh_my_zsh_themes_themes_path: "{{ item.oh_my_zsh_path | default(oh_my_zsh_path) }}/custom/themes"
+  with_items: "{{ oh_my_zsh_users }}"
 
-- include: oh-my-zsh.yml {{ item }}
-  #vars: "{{ vars['oh_my_zsh_' ~ item.user] | to_yaml }}"
-  with: "{{ vars['oh_my_zsh_' ~ item.user] }}"
-  with_dict: "{{ oh_my_zsh_users }}"
+- include: oh-my-zsh-plugins.yml
+  vars: 
+    - oh_my_zsh_plugins_user: "{{ item.user | default(item) }}"
+    - oh_my_zsh_plugins_plugins: "{{ oh_my_zsh_plugins }}"
+    - oh_my_zsh_plugins_plugins_path: "{{ item.oh_my_zsh_path | default(oh_my_zsh_path) }}/custom/plugins"
+  with_items: "{{ oh_my_zsh_users }}"

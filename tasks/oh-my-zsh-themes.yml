@@ -1,0 +1,11 @@
+---
+- name: Install oh-my-zsh themes
+  git:
+    repo: "{{ themes.src }}"
+    dest: "{{ oh_my_zsh_themes_themes_path }}/{{ themes.name }}"
+    update: yes
+  become: yes
+  become_user: "{{ oh_my_zsh_themes_user }}"
+  with_items: "{{ oh_my_zsh_themes_themes }}"
+  loop_control: 
+    loop_var: themes
