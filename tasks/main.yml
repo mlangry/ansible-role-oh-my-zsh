@@ -4,6 +4,10 @@
   set_fact: {"oh_my_zsh_{{ item.user }}": "{{ vars | combine(item) }}"}
   with_dict: "{{ oh_my_zsh_users }}"
 
-- include: oh-my-zsh.yml
-  vars: "{{ vars['oh_my_zsh_' ~ item.user] | to_yaml }}"
-  with_items: "{{ oh_my_zsh_users }}"
+- name: "Combine specific with default variables"
+  set_fact: {"oh_my_zsh_{{ item.user }}": "{{ vars | combine(item) }}"}
+  with_dict: "{{ oh_my_zsh_users }}"
+
+- include: oh-my-zsh.yml {{ item }}
+  #vars: "{{ vars['oh_my_zsh_' ~ item.user] | to_yaml }}"
+  with_items: "{{ vars['oh_my_zsh_' ~ item.user] }}"
