@@ -20,16 +20,18 @@
   become_user: "{{ item.user | default(item) }}"
   with_items: "{{ oh_my_zsh_users }}"
 
-- include: oh-my-zsh-themes.yml
+- include: oh-my-zsh-themes-plugins.yml
   vars: 
-    - oh_my_zsh_themes_user: "{{ item.user | default(item) }}"
-    - oh_my_zsh_themes_themes: "{{ oh_my_zsh_themes }}"
-    - oh_my_zsh_themes_themes_path: "{{ item.oh_my_zsh_path | default(oh_my_zsh_path) }}/custom/themes"
+    - oh_my_zsh_themes_plugins_user: "{{ item.user | default(item) }}"
+    - oh_my_zsh_themes_plugins_themes: "{{ oh_my_zsh_themes }}"
+    - oh_my_zsh_themes_plugins_themes_path: "{{ item.oh_my_zsh_path | default(oh_my_zsh_path) }}/custom/themes"
+    - oh_my_zsh_themes_plugins_plugins: "{{ oh_my_zsh_plugins }}"
+    - oh_my_zsh_themes_plugins_plugins_path: "{{ item.oh_my_zsh_path | default(oh_my_zsh_path) }}/custom/plugins"
   with_items: "{{ oh_my_zsh_users }}"
 
-- include: oh-my-zsh-plugins.yml
-  vars: 
-    - oh_my_zsh_plugins_user: "{{ item.user | default(item) }}"
-    - oh_my_zsh_plugins_plugins: "{{ oh_my_zsh_plugins }}"
-    - oh_my_zsh_plugins_plugins_path: "{{ item.oh_my_zsh_path | default(oh_my_zsh_path) }}/custom/plugins"
-  with_items: "{{ oh_my_zsh_users }}"
+#- include: oh-my-zsh-plugins.yml
+#  vars: 
+#    - oh_my_zsh_plugins_user: "{{ item.user | default(item) }}"
+#    - oh_my_zsh_plugins_plugins: "{{ oh_my_zsh_plugins }}"
+#    - oh_my_zsh_plugins_plugins_path: "{{ item.oh_my_zsh_path | default(oh_my_zsh_path) }}/custom/plugins"
+#  with_items: "{{ oh_my_zsh_users }}"

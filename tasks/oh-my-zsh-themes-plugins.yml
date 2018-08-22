@@ -1,0 +1,22 @@
+---
+- name: Install oh-my-zsh themes
+  git:
+    repo: "{{ themes.src }}"
+    dest: "{{ oh_my_zsh_themes_plugins_themes_path }}/{{ themes.name }}"
+    update: yes
+  become: yes
+  become_user: "{{ oh_my_zsh_themes_plugins_user }}"
+  with_items: "{{ oh_my_zsh_themes_plugins_themes }}"
+  loop_control: 
+    loop_var: themes
+
+- name: Install oh-my-zsh plugins
+  git:
+    repo: "{{ plugins.src }}"
+    dest: "{{ oh_my_zsh_themes_plugins_plugins_path }}/{{ plugins.name }}"
+    update: yes
+  become: yes
+  become_user: "{{ oh_my_zsh_themes_plugins_user }}"
+  with_items: "{{ oh_my_zsh_themes_plugins_plugins }}"
+  loop_control: 
+    loop_var: plugins
